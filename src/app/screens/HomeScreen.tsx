@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { MiniMap } from "../components/CourseMaps";
 import { POPULARITY, WEEKLY } from "../data";
+import { PetCertScreen, PetCertCompleteScreen } from "./CourseScreen";
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip,
   AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis,
@@ -23,8 +25,17 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
+      {/* AI Chatbot bar */}
+      <div className="mx-4 mt-2 flex items-center gap-2.5 bg-card border border-border rounded-2xl px-4 py-3">
+        <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0">
+          <Bot className="w-3 h-3 text-white"/>
+        </div>
+        <span className="flex-1 text-sm text-muted-foreground/60 truncate">퇴근 후에 30분 동안 러닝 뛸 만한 코스 추천해줘.</span>
+        <ArrowRight className="w-4 h-4 text-muted-foreground/40 shrink-0"/>
+      </div>
+
       {/* Today card */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#60AEDD] to-[#4A9DCC] p-5 mx-4 mt-2 shadow-lg shadow-[#60AEDD]/20">
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#60AEDD] to-[#4A9DCC] p-5 mx-4 shadow-lg shadow-[#60AEDD]/20">
         <div className="absolute inset-0 opacity-10"
           style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "20px 20px" }}/>
         <div className="relative">
@@ -53,15 +64,6 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
         </div>
       </div>
 
-      {/* AI Chatbot bar */}
-      <div className="mx-4 flex items-center gap-2.5 bg-card border border-border rounded-2xl px-4 py-3">
-        <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0">
-          <Bot className="w-3 h-3 text-white"/>
-        </div>
-        <span className="flex-1 text-sm text-muted-foreground/60 truncate">퇴근 후에 30분 동안 러닝 뛸 만한 코스 추천해줘.</span>
-        <ArrowRight className="w-4 h-4 text-muted-foreground/40 shrink-0"/>
-      </div>
-
       {/* Weekly AreaChart */}
       <div className="mx-4 bg-card border border-border rounded-3xl p-4">
         <div className="flex items-center justify-between mb-3">
@@ -85,6 +87,13 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
             <Area type="monotone" dataKey="km" stroke="#60AEDD" strokeWidth={2} fill="url(#wg)" dot={{ fill:"#60AEDD", r:3 }}/>
           </AreaChart>
         </ResponsiveContainer>
+        <div className="mt-4 pt-3 border-t border-border flex items-center gap-3">
+          <div className="w-8 h-8 rounded-xl bg-[#6ACF98]/15 flex items-center justify-center text-lg shrink-0">🌍</div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[11px] text-[#4CB57D] font-medium mb-0.5">오늘의 탄소 절감</p>
+            <p className="text-xs font-bold text-foreground">4.2km 달려 <span className="text-[#4CB57D]">0.9kg CO₂</span> 절감</p>
+          </div>
+        </div>
       </div>
 
       {/* Popular time */}
@@ -151,15 +160,7 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
         </div>
       </div>
 
-      {/* ESG mini card */}
-      <div className="mx-4 bg-gradient-to-r from-[#6ACF98]/12 to-[#60AEDD]/10 border border-[#DCE3F1] rounded-3xl p-4 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-[#6ACF98]/15 flex items-center justify-center text-2xl shrink-0">🌍</div>
-        <div className="flex-1 min-w-0">
-          <p className="text-xs text-[#4CB57D] font-medium mb-0.5">오늘의 탄소 절감</p>
-          <p className="text-sm font-bold text-foreground">4.2km 달려 <span className="text-[#4CB57D]">0.9kg CO₂</span> 절감</p>
-        </div>
-        <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0"/>
-      </div>
+
     </div>
   );
 }
