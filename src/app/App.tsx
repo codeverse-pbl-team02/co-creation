@@ -76,7 +76,7 @@ export default function App() {
               {homeCourseFlow ? <>코스 탐색</> : activeTab === "홈" ? <>안녕하세요, 김러너님 👋</> : activeTab === "코스" ? <>코스 탐색</> : activeTab === "기록" ? <>내 기록</> : activeTab === "혜택" ? <>동백전 · 혜택</> : <>ESG 챌린지</>}
             </h1>
             <p className="text-xs text-muted-foreground">
-              {homeCourseFlow ? "AI가 최적 코스를 추천해드려요" : activeTab === "홈" ? "서면역 인근 · 맑음 18°C" : activeTab === "코스" ? "AI가 최적 코스를 추천해드려요" : activeTab === "기록" ? "2025년 1월 누적 기록" : activeTab === "혜택" ? "러닝 완주로 적립한 혜택" : "함께 만드는 더 나은 부산"}
+              {homeCourseFlow ? "AI가 최적 코스를 추천해드려요" : activeTab === "홈" ? "강서구 명지동 · 맑음 18°C" : activeTab === "코스" ? "AI가 최적 코스를 추천해드려요" : activeTab === "기록" ? "2025년 1월 누적 기록" : activeTab === "혜택" ? "러닝 완주로 적립한 혜택" : "함께 만드는 더 나은 부산"}
             </p>
           </div>
           {activeTab === "홈" && !homeCourseFlow && (
