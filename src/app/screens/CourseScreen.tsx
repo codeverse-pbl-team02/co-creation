@@ -11,7 +11,7 @@ import {
   Flame, Wind, Droplets, Timer, X, Filter, Bot
 } from "lucide-react";
 
-function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
+export function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-col gap-4 pb-6 pt-4">
       {/* Title */}
@@ -89,7 +89,7 @@ function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
 
 // ─── Running Complete Screen ───────────────────────────────
 
-function PetCertScreen({ onBack, onSubmit }: { onBack: () => void; onSubmit: () => void }) {
+export function PetCertScreen({ onBack, onSubmit }: { onBack: () => void; onSubmit: () => void }) {
   return (
     <div className="flex flex-col gap-4 pb-6 pt-2">
       <div className="px-4 pt-1 pb-0">
