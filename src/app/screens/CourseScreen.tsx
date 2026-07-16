@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import petRunImg from "@/imports/image-7.png";
 import { GwangalliMap, MiniMap } from "../components/CourseMaps";
 import { COURSES } from "../data";
 import {
@@ -12,18 +11,14 @@ import {
   MessageSquare
 } from "lucide-react";
 
-import courseImg1 from "@/imports/seagull_run.png";
-import courseImg2 from "@/imports/duck_run.png";
-import courseImg3 from "@/imports/heart_run.png";
-import courseImg4 from "@/imports/dolphin_run.png";
-import gwangalliMap from "@/imports/image-2.png";
-
 const COURSE_IMAGES: Record<number, string> = {
-  1: courseImg1,
-  2: courseImg2,
-  3: courseImg3,
-  4: courseImg4,
+  1: "/seagull_run.png",
+  2: "/duck_run.png",
+  3: "/heart_run.png",
+  4: "/dolphin_run.png",
 };
+
+const gwangalliMap = "/image-2.png";
 
 export function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
   return (
@@ -38,7 +33,7 @@ export function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
 
       {/* Pet photo */}
       <div className="mx-4 rounded-3xl overflow-hidden border border-border" style={{ height: 500 }}>
-        <img src={petRunImg} alt="반려견 러닝 사진" className="w-full h-full object-cover"/>
+        <img src="/image-7.png" alt="반려견 러닝 사진" className="w-full h-full object-cover"/>
       </div>
 
       {/* Stats */}
