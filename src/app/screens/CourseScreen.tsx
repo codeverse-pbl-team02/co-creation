@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import petRunImg from "@/imports/image-7.png";
 import { GwangalliMap, MiniMap } from "../components/CourseMaps";
 import { COURSES } from "../data";
 import {
@@ -10,6 +9,9 @@ import {
   Home, Map, BarChart2, Gift, ChevronLeft, Plus,
   Flame, Wind, Droplets, Timer, X, Filter, Bot
 } from "lucide-react";
+
+const petRunImg = "/image-7.png";
+const gwangalliMap = "/image-2.png";
 
 function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
   return (
