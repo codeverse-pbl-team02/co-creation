@@ -25,7 +25,6 @@ const COURSE_IMAGES: Record<number, string> = {
   4: courseImg4,
 };
 
-function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
 export function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-col gap-4 pb-6 pt-4">
