@@ -1,6 +1,6 @@
 export const COURSES = [
   {
-    id: 1, name: "광안리 바다 드로잉런", area: "수영구",
+    id: 1, name: "광안리 바다 갈매기런", area: "수영구",
     dist: "5.2km", time: "38분", cal: "312kcal",
     diff: "보통", diffColor: "text-[#D7A72E]",
     type: "관광", icon: "🌊",
@@ -10,9 +10,15 @@ export const COURSES = [
     facilities: ["화장실 4", "음수대 2", "편의점 3"],
     tags: ["바다뷰", "포토스팟", "완주율 94%"],
     rating: 4.9, reviews: 2841,
+    userDist: 2.4,
+    comments: [
+      { nickname: "갈매기러너", text: "광안대교를 향해 뛰어가다 보면 실제로 갈매기 날개 모양으로 경로가 그려져서 신기해요! 🌊" },
+      { nickname: "광안리야경꾼", text: "낮보다는 광안대교 불빛이 들어오는 저녁 시간대에 뛰는 것을 강력 추천합니다." },
+      { nickname: "바다조아", text: "코스 주변에 예쁜 바다뷰 카페가 많아서 러닝 끝나고 가기 딱 좋습니다." }
+    ],
   },
   {
-    id: 2, name: "낙동강 생태공원 산책 코스", area: "강서구",
+    id: 2, name: "낙동강 생태공원 오리런", area: "강서구",
     dist: "7.8km", time: "55분", cal: "468kcal",
     diff: "쉬움", diffColor: "text-[#4CB57D]",
     type: "공원", icon: "🌿",
@@ -22,9 +28,15 @@ export const COURSES = [
     facilities: ["화장실 6", "운동기구 8", "주차장"],
     tags: ["반려견 OK", "평탄", "생태경관"],
     rating: 4.8, reviews: 1923,
+    userDist: 12.8,
+    comments: [
+      { nickname: "오리맘", text: "경로를 완주하고 지도를 보면 귀여운 오리가 그려져 있어서 정말 보람차요! 🦆" },
+      { nickname: "에코러너", text: "길이 아주 평탄해서 초보 러너나 반려견과 함께 뛰기 가장 쾌적한 코스입니다." },
+      { nickname: "댕댕이동반", text: "생태공원의 계절 꽃과 경치를 감상하며 천천히 힐링하면서 달리기 좋습니다." }
+    ],
   },
   {
-    id: 3, name: "서면 생활권 러닝 루트", area: "부산진구",
+    id: 3, name: "서면 생활권 하트런", area: "부산진구",
     dist: "3.6km", time: "24분", cal: "216kcal",
     diff: "쉬움", diffColor: "text-[#4CB57D]",
     type: "생활권", icon: "🏙️",
@@ -34,9 +46,15 @@ export const COURSES = [
     facilities: ["지하철역", "편의점 8", "카페 12"],
     tags: ["출퇴근", "상권연계", "야간 OK"],
     rating: 4.7, reviews: 3102,
+    userDist: 0.8,
+    comments: [
+      { nickname: "도심하트왕", text: "도심 한복판을 하트 모양으로 그리는 코스예요. 연인과 함께 이색 데이트로 뛰기 좋아요! ❤️" },
+      { nickname: "야근러너", text: "지하철역과 가까워서 접근성이 뛰어나고 퇴근 후 한 바퀴 돌기 편합니다." },
+      { nickname: "데이트코서", text: "번화가 골목을 요리조리 지나가는데 은근히 지루하지 않고 페이스가 잘 나옵니다." }
+    ],
   },
   {
-    id: 4, name: "해운대 해변 새벽 러닝", area: "해운대구",
+    id: 4, name: "해운대 해변 돌고래런", area: "해운대구",
     dist: "4.5km", time: "30분", cal: "270kcal",
     diff: "보통", diffColor: "text-[#D7A72E]",
     type: "관광", icon: "🌅",
@@ -46,6 +64,12 @@ export const COURSES = [
     facilities: ["샤워실 2", "음수대 4", "카페 6"],
     tags: ["새벽 추천", "일출 뷰", "포토스팟"],
     rating: 4.9, reviews: 4210,
+    userDist: 5.6,
+    comments: [
+      { nickname: "돌고래슈터", text: "해운대 모래사장 라인을 따라 뛰며 돌고래 지느러미 형상을 그리는 멋진 코스입니다! 🐬" },
+      { nickname: "일출수집가", text: "이른 아침 일출을 보면서 뛰면 피로가 싹 가시고 인생샷 건질 수 있어요." },
+      { nickname: "해운대토박이", text: "중간에 편의시설과 화장실이 아주 잘 갖춰져 있어서 매우 편리합니다." }
+    ],
   },
 ];
 
