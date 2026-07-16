@@ -1,7 +1,7 @@
-import { BADGES } from "../data";
+import { useState } from "react";
+import { BADGES, WEEKLY } from "../data";
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip,
-  AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis,
 } from "recharts";
 import {
   MapPin, Navigation, Zap, Leaf, Award, Users, Star,
