@@ -8,9 +8,24 @@ import {
   Clock, Target, Heart, Dog, Recycle, Shield, Globe,
   ArrowRight, Activity, Bell, Search, Settings, Play,
   Home, Map, BarChart2, Gift, ChevronLeft, Plus,
-  Flame, Wind, Droplets, Timer, X, Filter, Bot
+  Flame, Wind, Droplets, Timer, X, Filter, Bot,
+  MessageSquare
 } from "lucide-react";
 
+import courseImg1 from "@/imports/seagull_run.png";
+import courseImg2 from "@/imports/duck_run.png";
+import courseImg3 from "@/imports/heart_run.png";
+import courseImg4 from "@/imports/dolphin_run.png";
+import gwangalliMap from "@/imports/image-2.png";
+
+const COURSE_IMAGES: Record<number, string> = {
+  1: courseImg1,
+  2: courseImg2,
+  3: courseImg3,
+  4: courseImg4,
+};
+
+function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
 export function PetCertCompleteScreen({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-col gap-4 pb-6 pt-4">
@@ -435,6 +450,8 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
   const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [selectedCommentCourse, setSelectedCommentCourse] = useState<any | null>(null);
+  const [sortBy, setSortBy] = useState("rating");
   const filters = ["전체", "생활권", "관광", "공원", "반려견"];
 
   useEffect(() => {
@@ -442,7 +459,26 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
     return () => setHideScreenTitle(false);
   }, [completed, setHideScreenTitle]);
 
-  const filtered = filter === "전체" ? COURSES : COURSES.filter(c => c.type === filter || (filter === "반려견" && c.name.includes("생태")));
+  const getSortedCourses = () => {
+    let list = filter === "전체" ? COURSES : COURSES.filter(c => c.type === filter || (filter === "반려견" && c.name.includes("생태")));
+    
+    if (sortBy === "rating") {
+      return [...list].sort((a, b) => b.rating - a.rating);
+    }
+    if (sortBy === "reviews") {
+      return [...list].sort((a, b) => b.reviews - a.reviews);
+    }
+    if (sortBy === "dist") {
+      return [...list].sort((a, b) => (a.userDist || 0) - (b.userDist || 0));
+    }
+    if (sortBy === "time") {
+      const parseTime = (t: string) => parseInt(t.replace(/[^0-9]/g, '')) || 0;
+      return [...list].sort((a, b) => parseTime(a.time) - parseTime(b.time));
+    }
+    return list;
+  };
+
+  const sorted = getSortedCourses();
 
   if (completed) {
     return <RunningCompleteScreen onClose={() => { setCompleted(false); setSelectedCourseId(null); }} />;
@@ -457,7 +493,7 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
   }
 
   return (
-    <div className="flex flex-col gap-0 pb-4">
+    <div className="flex flex-col gap-0 pb-4 relative">
       {/* Map area */}
       <div className="mx-4 mt-2 rounded-3xl overflow-hidden border border-border bg-card relative" style={{ height: 200 }}>
         <MiniMap />
@@ -473,8 +509,8 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
         </div>
         {/* Route badges */}
         <div className="absolute bottom-3 left-3 flex gap-2">
-          <span className="px-2.5 py-1 rounded-full bg-card/90 backdrop-blur-sm border border-primary/30 text-primary text-xs font-mono">강서구청 루프 4.6km</span>
-          <span className="px-2.5 py-1 rounded-full bg-card/90 backdrop-blur-sm border border-accent/30 text-accent text-xs font-mono">대저 생태런 6.8km</span>
+          <span className="px-2.5 py-1 rounded-full bg-card/90 backdrop-blur-sm border border-primary/30 text-primary text-xs font-semibold">강서구청 루프 4.6km</span>
+          <span className="px-2.5 py-1 rounded-full bg-card/90 backdrop-blur-sm border border-accent/30 text-accent text-xs font-semibold">대저 생태런 6.8km</span>
         </div>
       </div>
 
@@ -514,10 +550,37 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
         ))}
       </div>
 
+      {/* Sort selector dropdown */}
+      <div className="flex items-center justify-between px-4 pb-2.5 text-xs text-muted-foreground">
+        <span>총 {sorted.length}개의 코스</span>
+        <div className="flex items-center gap-1.5">
+          <span className="font-medium text-muted-foreground">정렬:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="bg-card text-foreground font-bold border border-border rounded-none px-2.5 py-1 focus:outline-none cursor-pointer text-xs"
+          >
+            <option value="rating">★ 별점 높은 순</option>
+            <option value="reviews">🔥 많이 이용한 순</option>
+            <option value="dist">📍 가까운 순</option>
+            <option value="time">⏱ 코스 시간이 짧은 순</option>
+          </select>
+        </div>
+      </div>
+
       {/* Course list */}
       <div className="flex flex-col gap-3 px-4">
-        {filtered.map(c => (
+        {sorted.map(c => (
           <div key={c.id} className={`bg-gradient-to-br ${c.cardBg} border ${c.border} rounded-3xl p-4 hover:scale-[1.01] transition-transform cursor-pointer active:scale-[0.99]`}>
+            {/* Course Photo */}
+            <div className="w-full h-32 rounded-2xl overflow-hidden mb-3.5 relative">
+              <img
+                src={COURSE_IMAGES[c.id]}
+                alt={c.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -526,7 +589,11 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
                   <span className="text-xs text-[#D7A72E] font-mono">★ {c.rating}</span>
                 </div>
                 <h3 className="font-bold text-foreground truncate pr-2">{c.name}</h3>
-                <p className="text-xs text-muted-foreground">{c.area}</p>
+                <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                  <span>{c.area}</span>
+                  <span className="text-muted-foreground/30">•</span>
+                  <span className="text-primary font-semibold">내 위치에서 {c.userDist}km</span>
+                </p>
               </div>
               <span className="text-3xl shrink-0">{c.icon}</span>
             </div>
@@ -539,7 +606,12 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
 
             <div className="flex flex-wrap gap-1.5 mb-3">
               {c.tags.map(t => (
-                <span key={t} className="text-xs px-2 py-0.5 bg-background/40 rounded-full text-muted-foreground">{t}</span>
+                <span
+                  key={t}
+                  className="text-xs px-2 py-0.5 rounded-full border border-amber-300 bg-amber-50 text-amber-800 font-semibold"
+                >
+                  {t}
+                </span>
               ))}
             </div>
 
@@ -553,6 +625,15 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
               <button className="w-10 h-10 rounded-xl border border-border bg-card/50 flex items-center justify-center">
                 <Heart className="w-4 h-4 text-muted-foreground"/>
               </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedCommentCourse(c);
+                }}
+                className="w-10 h-10 rounded-xl border border-border bg-card/50 flex items-center justify-center hover:bg-muted transition-colors active:scale-95"
+              >
+                <MessageSquare className="w-4 h-4 text-muted-foreground"/>
+              </button>
               <button className="w-10 h-10 rounded-xl border border-border bg-card/50 flex items-center justify-center">
                 <Share2 className="w-4 h-4 text-muted-foreground"/>
               </button>
@@ -560,6 +641,52 @@ export function CourseScreen({ setHideScreenTitle }: { setHideScreenTitle: (hide
           </div>
         ))}
       </div>
+
+      {/* Comment Modal overlay */}
+      {selectedCommentCourse && (
+        <div className="absolute inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end justify-center">
+          <div className="w-full bg-background rounded-t-[32px] border-t border-border p-5 flex flex-col max-h-[70%] shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h4 className="font-bold text-base text-foreground">{selectedCommentCourse.name}</h4>
+                <p className="text-xs text-muted-foreground">러너들의 추천 코멘트 💬</p>
+              </div>
+              <button
+                onClick={() => setSelectedCommentCourse(null)}
+                className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Body (Comments list) */}
+            <div className="flex-1 overflow-y-auto space-y-3 pr-1 pb-4">
+              {selectedCommentCourse.comments && selectedCommentCourse.comments.length > 0 ? (
+                selectedCommentCourse.comments.map((comment: any, idx: number) => (
+                  <div key={idx} className="bg-card border border-border rounded-2xl p-3.5 flex gap-3 items-start shadow-sm">
+                    <span className="text-xl shrink-0">🏃</span>
+                    <div className="flex-1">
+                      <p className="text-xs font-bold text-foreground">{comment.nickname}</p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{comment.text}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-xs text-muted-foreground text-center py-8">아직 등록된 코멘트가 없습니다.</p>
+              )}
+            </div>
+
+            {/* Modal Close Button */}
+            <button
+              onClick={() => setSelectedCommentCourse(null)}
+              className="w-full py-4 bg-[#17213D] text-white rounded-2xl text-sm font-bold hover:bg-[#0F1828] transition-colors shrink-0"
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
