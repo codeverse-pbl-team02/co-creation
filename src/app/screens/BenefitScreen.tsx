@@ -34,7 +34,7 @@ export function BenefitScreen() {
 
       {/* Flow: Complete → Verify → Earn → Spend */}
       <div className="mx-4 bg-card border border-border rounded-3xl p-4">
-        <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-3">적립 구조</p>
+        <p className="font-bold text-sm text-foreground mb-3">적립 구조</p>
         <div className="flex items-center justify-between">
           {[
             { icon: "🏃", label: "완주" },
@@ -47,7 +47,7 @@ export function BenefitScreen() {
                 <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-xl">{icon}</div>
                 <span className="text-xs text-muted-foreground">{label}</span>
               </div>
-              {i < arr.length - 1 && <ChevronRight className="w-4 h-4 text-muted-foreground/40 mx-1"/>}
+              {i < arr.length - 1 && <ChevronRight className="w-4 h-4 text-muted-foreground/40 mx-6 self-start mt-3.5"/>}
             </div>
           ))}
         </div>
