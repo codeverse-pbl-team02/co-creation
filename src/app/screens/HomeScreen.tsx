@@ -4,7 +4,7 @@ import { POPULARITY, WEEKLY } from "../data";
 import { PetCertScreen, PetCertCompleteScreen } from "./CourseScreen";
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip,
-  AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis,
+  AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis, Cell,
 } from "recharts";
 import {
   MapPin, Navigation, Zap, Leaf, Award, Users, Star,
@@ -17,10 +17,10 @@ import {
 
 export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
   const todayStats = [
-    { icon: <Timer className="w-4 h-4"/>, label: "시간", val: "38:24", unit: "분" },
-    { icon: <Flame className="w-4 h-4"/>, label: "칼로리", val: "312", unit: "kcal" },
-    { icon: <Activity className="w-4 h-4"/>, label: "페이스", val: "5'32\"", unit: "/km" },
-    { icon: <Wind className="w-4 h-4"/>, label: "케이던스", val: "168", unit: "spm" },
+    { icon: <Timer className="w-4 h-4" />, label: "시간", val: "38:24", unit: "분" },
+    { icon: <Flame className="w-4 h-4" />, label: "칼로리", val: "312", unit: "kcal" },
+    { icon: <Activity className="w-4 h-4" />, label: "페이스", val: "5'32\"", unit: "/km" },
+    { icon: <Wind className="w-4 h-4" />, label: "케이던스", val: "168", unit: "spm" },
   ];
 
   return (
@@ -28,36 +28,53 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
       {/* AI Chatbot bar */}
       <div className="mx-4 mt-2 flex items-center gap-2.5 bg-card border border-border rounded-2xl px-4 py-3">
         <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0">
-          <Bot className="w-3 h-3 text-white"/>
+          <Bot className="w-3 h-3 text-white" />
         </div>
         <span className="flex-1 text-sm text-muted-foreground/60 truncate">퇴근 후에 30분 동안 러닝 뛸 만한 코스 추천해줘.</span>
-        <ArrowRight className="w-4 h-4 text-muted-foreground/40 shrink-0"/>
+        <ArrowRight className="w-4 h-4 text-muted-foreground/40 shrink-0" />
       </div>
 
-      {/* Today card */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#60AEDD] to-[#4A9DCC] p-5 mx-4 shadow-lg shadow-[#60AEDD]/20">
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "20px 20px" }}/>
-        <div className="relative">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p className="text-white/70 text-xs font-medium mb-0.5">오늘의 러닝</p>
-              <p className="text-white font-bold">광안리 바다 드로잉런</p>
-            </div>
-            <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center">
-              <Play className="w-5 h-5 text-white fill-white"/>
-            </div>
+      {/* Today card — two separate containers side by side */}
+      <div className="mx-4 flex gap-3">
+        {/* Left card — route map image */}
+        <div className="flex-1 rounded-3xl overflow-hidden bg-card border border-border flex flex-col shadow-sm">
+          <div className="relative flex-1" style={{ minHeight: 140 }}>
+            <img
+              src="/gwangalli_seagull_map.png"
+              alt="광안리 바다 갈매기런 드로잉 지도"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div className="flex items-end gap-1 mb-4">
-            <span className="text-5xl font-black text-white" style={{ fontFamily:"'Exo 2',sans-serif" }}>5.2</span>
-            <span className="text-xl text-white/80 font-semibold mb-1">km</span>
+          {/* footer */}
+          <div className="px-3 py-2 flex items-center gap-3 border-t border-border bg-card">
+            <span className="flex items-center gap-1 text-muted-foreground text-xs">
+              <Heart className="w-3.5 h-3.5" /> 612
+            </span>
+            <span className="flex items-center gap-1 text-muted-foreground text-xs">
+              <Users className="w-3.5 h-3.5" /> 10
+            </span>
           </div>
-          <div className="grid grid-cols-4 gap-3">
-            {todayStats.map(({ icon, label, val, unit }) => (
-              <div key={label} className="bg-white/10 rounded-2xl p-2.5 text-center backdrop-blur-sm">
-                <div className="text-white/60 flex justify-center mb-1">{icon}</div>
-                <div className="text-white text-sm font-bold leading-none">{val}</div>
-                <div className="text-white/50 text-xs mt-0.5">{unit}</div>
+        </div>
+
+        {/* Right card — stats */}
+        <div className="flex-1 rounded-3xl bg-card border border-border p-4 flex flex-col justify-between shadow-sm">
+          {/* course label */}
+          <div className="mb-3">
+            <p className="text-[10px] text-muted-foreground font-medium mb-0.5">오늘의 러닝</p>
+            <p className="font-bold text-foreground text-sm leading-tight">광안리 바다<br />갈매기런</p>
+          </div>
+
+          {/* stats list — big value + small label */}
+          <div className="flex flex-col gap-3">
+            {[
+              { val: "5.2 km",      label: "Distance" },
+              { val: "38:24",       label: "Duration" },
+              { val: "5'32\"/km",   label: "Avg Pace" },
+              { val: "142 bpm",     label: "Heart Rate" },
+            ].map(({ val, label }) => (
+              <div key={label}>
+                <p className="font-black text-foreground text-base leading-none" style={{ fontFamily: "'Exo 2',sans-serif" }}>{val}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">{label}</p>
               </div>
             ))}
           </div>
@@ -74,17 +91,33 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
           <AreaChart data={WEEKLY}>
             <defs>
               <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#60AEDD" stopOpacity={0.25}/>
-                <stop offset="95%" stopColor="#60AEDD" stopOpacity={0}/>
+                <stop offset="5%" stopColor="#60AEDD" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#60AEDD" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="day" tick={{ fontSize: 10, fill: "#7B8796" }} axisLine={false} tickLine={false}/>
-            <YAxis hide/>
+            <XAxis dataKey="day" tick={{ fontSize: 10, fill: "#7B8796" }} axisLine={false} tickLine={false} />
+            <YAxis hide />
             <Tooltip
-              contentStyle={{ background:"#FFFFFF", border:"1px solid #DCE3F1", borderRadius:"12px", color:"#17213D", fontSize:11 }}
-              formatter={(v:number) => [`${v}km`,""]}
+              contentStyle={{ background: "#FFFFFF", border: "1px solid #DCE3F1", borderRadius: "12px", color: "#17213D", fontSize: 11 }}
+              formatter={(v: number) => [`${v}km`, ""]}
             />
-            <Area type="monotone" dataKey="km" stroke="#60AEDD" strokeWidth={2} fill="url(#wg)" dot={{ fill:"#60AEDD", r:3 }}/>
+            <Area
+              type="monotone"
+              dataKey="km"
+              stroke="#60AEDD"
+              strokeWidth={2}
+              fill="url(#wg)"
+              dot={(props: { cx: number; cy: number; index: number }) => {
+                const { cx, cy, index } = props;
+                const nonZero = WEEKLY.filter(d => d.km > 0);
+                const maxKm = Math.max(...nonZero.map(d => d.km));
+                const minKm = Math.min(...nonZero.map(d => d.km));
+                const val = WEEKLY[index].km;
+                const color = val === maxKm ? "#EF4444" : val > 0 && val === minKm ? "#22C55E" : "#60AEDD";
+                const r = (val === maxKm || val === minKm) ? 5 : 3;
+                return <circle key={index} cx={cx} cy={cy} r={r} fill={color} stroke="#fff" strokeWidth={1.5} />;
+              }}
+            />
           </AreaChart>
         </ResponsiveContainer>
         <div className="mt-4 pt-3 border-t border-border flex items-center gap-3">
@@ -104,10 +137,20 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
         </div>
         <ResponsiveContainer width="100%" height={70}>
           <BarChart data={POPULARITY} barSize={18}>
-            <XAxis dataKey="time" tick={{ fontSize: 9, fill: "#7B8796" }} axisLine={false} tickLine={false}/>
-            <YAxis hide/>
-            <Bar dataKey="v" fill="#60AEDD" radius={[4,4,0,0]}
-              label={false}/>
+            <XAxis dataKey="time" tick={{ fontSize: 9, fill: "#7B8796" }} axisLine={false} tickLine={false} />
+            <YAxis hide />
+            <Bar dataKey="v" radius={[4, 4, 0, 0]} label={false}>
+              {(() => {
+                const maxV = Math.max(...POPULARITY.map(d => d.v));
+                const minV = Math.min(...POPULARITY.map(d => d.v));
+                return POPULARITY.map((entry, i) => (
+                  <Cell
+                    key={i}
+                    fill={entry.v === maxV ? "#EF4444" : entry.v === minV ? "#22C55E" : "#60AEDD"}
+                  />
+                ));
+              })()}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
         <div className="flex gap-2 mt-2">
@@ -117,8 +160,10 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
       </div>
 
       {/* Quick actions */}
-      <div className="mx-4">
-        <p className="text-xs text-muted-foreground font-mono uppercase tracking-widest mb-3">빠른 메뉴</p>
+      <div className="mx-5">
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-bold text-sm text-foreground">빠른 메뉴</span>
+        </div>
         <div className="grid grid-cols-4 gap-3">
           {[
             { icon: "🗺️", label: "코스 탐색" },
@@ -135,7 +180,7 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
       </div>
 
       {/* Recommended course card */}
-      <div className="mx-4">
+      <div className="mx-5">
         <div className="flex items-center justify-between mb-3">
           <span className="font-bold text-sm text-foreground">AI 추천 코스</span>
           <span className="text-xs text-muted-foreground">현재 위치 : 강서구 명지동</span>
@@ -150,12 +195,12 @@ export function HomeScreen({ onStartCourse }: { onStartCourse: () => void }) {
             <span className="text-3xl">⛵</span>
           </div>
           <div className="flex gap-4 text-xs text-muted-foreground mb-3">
-            <span className="flex items-center gap-1"><Target className="w-3 h-3 text-primary"/>4.8km</span>
-            <span className="flex items-center gap-1"><Clock className="w-3 h-3 text-primary"/>35분</span>
-            <span className="flex items-center gap-1"><Flame className="w-3 h-3 text-primary"/>288kcal</span>
+            <span className="flex items-center gap-1"><Target className="w-3 h-3 text-primary" />4.8km</span>
+            <span className="flex items-center gap-1"><Clock className="w-3 h-3 text-primary" />35분</span>
+            <span className="flex items-center gap-1"><Flame className="w-3 h-3 text-primary" />288kcal</span>
           </div>
           <button onClick={onStartCourse} className="w-full py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-            <Navigation className="w-4 h-4"/>이 코스로 시작하기
+            <Navigation className="w-4 h-4" />이 코스로 시작하기
           </button>
         </div>
       </div>
@@ -308,7 +353,7 @@ export function HomeCourseDetailScreen({ onBack, onStart }: { onBack: () => void
       {/* Back button */}
       <div className="px-4 pt-1 pb-2">
         <button onClick={onBack} className="flex items-center gap-1.5 text-muted-foreground text-sm hover:text-foreground transition-colors">
-          <ChevronLeft className="w-4 h-4"/>뒤로
+          <ChevronLeft className="w-4 h-4" />뒤로
         </button>
       </div>
 
@@ -334,7 +379,7 @@ export function HomeCourseDetailScreen({ onBack, onStart }: { onBack: () => void
             <div>
               <p className="font-bold text-foreground text-sm mb-1">생태 랜드마크 3곳 포함</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                낙동강 하구 철새도래지, 명지시장, 신호생태공원<br/>인증 지점이 자동 표시됩니다.
+                낙동강 하구 철새도래지, 명지시장, 신호생태공원<br />인증 지점이 자동 표시됩니다.
               </p>
             </div>
           </div>
@@ -361,7 +406,7 @@ export function HomeCourseDetailScreen({ onBack, onStart }: { onBack: () => void
           onClick={onStart}
           className="w-full py-4 bg-[#6ACF98] text-white rounded-2xl text-base font-bold hover:bg-[#57B884] transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#6ACF98]/30"
         >
-          <Navigation className="w-5 h-5"/>러닝 시작
+          <Navigation className="w-5 h-5" />러닝 시작
         </button>
       </div>
     </div>
