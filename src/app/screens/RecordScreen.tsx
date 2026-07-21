@@ -19,7 +19,7 @@ export function RecordScreen() {
     <div className="flex flex-col gap-4 pb-4">
       {/* Summary card */}
       <div className="mx-4 mt-2 bg-card border border-border rounded-3xl p-5">
-        <p className="text-xs text-muted-foreground mb-3 font-mono uppercase tracking-wider">이달의 누적 기록</p>
+        <p className="text-xs text-muted-foreground mb-3">이달의 누적 기록</p>
         <div className="grid grid-cols-3 gap-3 mb-4">
           {[
             { val: "124.6", unit: "km", label: "총 거리", color: "text-primary" },
@@ -102,7 +102,7 @@ export function RecordScreen() {
                 <div key={label} className={`flex flex-col items-center p-4 rounded-2xl border text-center transition-all ${earned ? "bg-[#F7D66C]/20 border-[#F7D66C]/50" : "bg-muted/10 border-border opacity-40"}`}>
                   <span className="text-3xl mb-2">{icon}</span>
                   <span className="text-xs text-foreground leading-tight">{label}</span>
-                  {earned && <span className="text-xs text-[#D7A72E] mt-1 font-mono">획득!</span>}
+                  {earned && <span className="text-xs text-[#D7A72E] mt-1 font-mono font-bold">획득!</span>}
                 </div>
               ))}
             </div>
@@ -119,7 +119,7 @@ export function RecordScreen() {
           <div className="bg-card border border-border rounded-3xl p-4">
             <div className="flex items-center justify-between mb-4">
               <span className="font-bold text-sm text-foreground">월간 챌린지 랭킹</span>
-              <span className="text-xs font-mono text-muted-foreground">2025년 1월</span>
+              <span className="text-xs font-mono text-muted-foreground">2026년 7월</span>
             </div>
             {[
               { rank: 1, name: "강지훈", sub: "마루와 함께", dist: "312km", badge: "🥇" },
